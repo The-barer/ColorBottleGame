@@ -1,6 +1,4 @@
-const gameBoard = document.querySelector('.gameBoard')
 const controls = document.querySelector('.controls')
-
 gameBoard.addEventListener('click', bottleEvents)
 controls.addEventListener('click', controlsEvents)
 
@@ -33,11 +31,16 @@ function controlsEvents(event) {
 
     switch ($Button.dataset.type) {
         case 'startNewGame':
-            createPlayground(9,4,2)
+            createLevelList(14,2)
+            initGame(startList)
             break;
     
         case 'startAgainCurrent':
-            createPlayground(9,4,2, false)
+            initGame(startList)
+            break;
+            
+        case 'stepback':
+            restoreState()
             break;
     }
 }

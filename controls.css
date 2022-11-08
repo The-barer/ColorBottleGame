@@ -1,0 +1,18 @@
+.controls{
+    position: fixed;
+    top: 10px;
+    height: fit-content;
+    
+}
+.controls>button {
+    background-color: transparent;
+    border: 0px solid;
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.controls>button:hover {
+    color: aqua;
+}
