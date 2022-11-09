@@ -1,4 +1,3 @@
-const controls = document.querySelector('.controls')
 gameBoard.addEventListener('click', bottleEvents)
 controls.addEventListener('click', controlsEvents)
 
@@ -9,6 +8,8 @@ function bottleEvents(event) {
     let $newBottle = event.target
     if ($newBottle.classList.contains('colorPiece')) {
         $newBottle = $newBottle.parentNode
+    } else if(!$newBottle.classList.contains('bottle')){
+        return
     }
 
     if(choosedState) {
@@ -27,20 +28,40 @@ function controlsEvents(event) {
     let $Button = event.target
     if(!$Button.dataset.type) {
         $Button = event.target.parentNode
+    } else if(!$Button.dataset.type){
+        return
     }
 
     switch ($Button.dataset.type) {
         case 'startNewGame':
-            createLevelList(14,2)
-            initGame(startList)
+            startNewGame()
             break;
-    
         case 'startAgainCurrent':
             initGame(startList)
             break;
-            
         case 'stepback':
             restoreState()
             break;
+        case 'addempty':
+            addEmptyBottle()
+            break;
+        case 'about':
+            aboutWindow = $.modal({...aboutModal})
+            aboutWindow.open()
+            break
     }
+}
+
+function startNewGame(col = 14, free = 2, piece = 5) {
+    startList = createLevelList(col, free, piece)
+    initGame(startList)
+    controls.innerHTML = ''
+    addStepBackButton()
+    addStartAgainButton()
+    addNewEmptyButton()
+}
+function stopGame() {
+    controls.innerHTML = ''
+    addNewGameButton()
+    addInfoButton()
 }

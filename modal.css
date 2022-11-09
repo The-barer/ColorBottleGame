@@ -1,0 +1,97 @@
+.tbmodal.opened, .tbmodal.closing {
+    z-index: 100;
+    opacity: 1;
+}
+
+.tbmodal.opened .modal-window {
+    animation: fadeInUp;
+    animation-duration: 200ms;
+
+}
+.tbmodal.closing .modal-window {
+    opacity: 0;
+    animation: fadeOutUp;
+    animation-duration: 200ms;
+}
+
+.tbmodal.opened .modal-overlay {
+    background-color: rgba(0,0,0,.6);
+}
+
+.tbmodal {
+    z-index: -1;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+} 
+
+.modal-overlay {
+    display: flex;
+    align-content: center;
+    background-color: rgba(0,0,0,.0);
+    width: 100%;
+    height: 100%;
+    transition: background-color 200ms ease-in-out;
+}
+
+.modal-window {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 400px;
+    height: fit-content;
+    margin: 30vh auto;
+    user-select: none;
+    transition: opacity 100ms ease-out;
+}
+.modal-title {
+    display: flex;
+    padding: 10px 20px 0px 20px ;
+    font-size: 1.5rem;
+    color: rgb(5, 83, 83);
+    margin: 0;
+    justify-content: space-between;
+}
+.modal-body {
+    color: rgb(5, 83, 83);
+    padding: 5px 10px;
+}
+.modal-footer{
+    padding: 5px 10px;
+}
+.modal-close:hover {
+    text-shadow: 0 0 3px rgba(0,0,0,.2);
+    cursor: pointer;
+}
+
+.btn {
+    outline: none;
+    background-color: transparent;
+    border: 2px solid;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: rgb(0, 195, 195);
+    margin: 0 5px;
+    cursor: pointer;
+}
+.btn.btn-primary {
+    color: rgba(30, 87, 255, 0.6);
+}
+.btn.btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 2px rgba(30, 87, 255, 0.6);
+}
+.btn.btn-secondary {
+    color: rgba(255, 30, 87, 0.6);
+}
+.btn.btn-secondary:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 2px rgb(255, 30, 87, 0.6);
+}
+
+.setPieces {
+    display: flex;
+    align-items: center;
+}

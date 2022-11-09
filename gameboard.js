@@ -1,11 +1,10 @@
 const gameBoard = document.querySelector('.gameBoard')
 const MINBOTTLEWIDTH = 40
+const MAX_ADDEMPTY = 2
 const DIFFICULTY = 5
-const COLORS = ['red', 'green', 'blue', 'yellow', "aquamarine", 'purple', 'navy', 'maroon', 'orange', '#0075A2', '#FFCBA4', '#3e5641', '#83bca9', '#ca6680']
-let colorList = ['aquamarine', '#FFCBA4', 'blue', 'navy', 'blue', 'maroon', '#3e5641', 'yellow', 'navy', 'navy', 'red', '#83bca9', 'purple', 'aquamarine', '#FFCBA4', '#83bca9', 'aquamarine', '#83bca9', 'green', 'red', 'orange', 'maroon', '#3e5641', 'red', '#FFCBA4', 'orange', '#3e5641', '#ca6680', 'yellow', '#FFCBA4', 'maroon', '#0075A2', 'yellow', '#3e5641', 'purple', 'purple', '#0075A2', 'green', 'maroon', '#ca6680', 'purple', 'aquamarine', '#83bca9', 'navy', 'blue', 'aquamarine', 'green', 'maroon', 'green', '#ca6680', '#3e5641', '#83bca9', 'orange', '#ca6680', '#ca6680', 'orange', 'navy', '#FFCBA4', '#0075A2', 'purple', '#0075A2', 'blue', 'orange', 'red', 'red', '#0075A2', 'yellow', 'green', 'yellow', 'blue']
-// let colorList = ['aquamarine', '#FFCBA4', 'blue', 'navy', 'blue', 'maroon', '#3e5641', 'yellow', 'navy', 'navy', 'red', '#83bca9', 'purple', 'aquamarine', '#FFCBA4', '#83bca9', 'aquamarine', '#83bca9', 'green', 'red', 'orange', 'maroon', '#3e5641', 'red', '#FFCBA4', 'orange', '#3e5641', '#ca6680', 'yellow', '#FFCBA4', 'maroon', '#0075A2', 'yellow', '#3e5641', 'purple', 'purple', '#0075A2', 'green', 'maroon', '#ca6680', 'purple', 'aquamarine', '#83bca9', 'navy', 'blue', 'aquamarine', 'green', 'maroon', 'green', '#ca6680', '#3e5641', '#83bca9', 'orange', '#ca6680', '#ca6680', 'orange', 'navy', '#FFCBA4', '#0075A2', 'purple', '#0075A2', 'blue', 'orange', 'red', 'red', '#0075A2', 'yellow', 'green', 'yellow', 'blue']
-//14,2
-const startList = []
+const COLORS = ['red', 'green', 'blue', 'yellow', "aquamarine", 'purple', 'navy', 'maroon', 'orange', '#0075A2', '#FFCBA4', '#3e5641', '#ca6680']
+
+let startList = []
 
 
 function maxElements($Element = gameBoard, pieces = DIFFICULTY, minWidth = MINBOTTLEWIDTH) {
@@ -16,32 +15,36 @@ function maxElements($Element = gameBoard, pieces = DIFFICULTY, minWidth = MINBO
 
 
 function initGame(levelList) {
-    const ROWS = levelList.length > 5 ? 2 : 1;
-    const elementsInRow = levelList.length / ROWS
-    const bottleWidth = gameBoard.clientWidth/(elementsInRow+2)
-    const bottleHeigth = gameBoard.clientHeight/((levelList[0].size + 1)*ROWS)
-    const width = bottleWidth<bottleHeigth ? bottleWidth : bottleHeigth
+    const elemSize = levelList[0]
+    const elemsCount = levelList.length -1
+    const ROWS = elemsCount > 5 ? 2 : 1;
+    const elemCurrentGameWidth = setBottleWidth(elemSize, elemsCount, ROWS)
+    
     gameBoard.innerHTML = ''
     gameBoard.appendChild(newRow());
-    for (const $bottle of levelList) {
-        $bottle.width = width
-        $bottle.colors = [...$bottle.origincolors]
-        if (gameBoard.lastChild.childNodes.length === elementsInRow) {
+    for (let i = 0; i < elemsCount; i++) {
+        if (gameBoard.lastChild.childNodes.length === Math.ceil(elemsCount / ROWS)) {
             gameBoard.appendChild(newRow());
         }
+        const $bottle = createBottle(levelList[i+1], elemSize)
+        $bottle.width = elemCurrentGameWidth
         initBottle($bottle)
         gameBoard.lastChild.appendChild($bottle)
     }
 }
 
-function createLevelList(colorCount = 6, emptyCount = 1, ) { 
-    // colorList = createColorList(colorCount, DIFFICULTY) DEBUG
-    const tempColors = [...colorList];
-    const totalBottles = colorCount + emptyCount;
-    for (let i = 0; i < totalBottles; i++) {
-        const $bottle = createBottle(DIFFICULTY, tempColors, i)
-        startList[i] = $bottle
-    }
+function createLevelList(colors, emptyCount, pieces) { 
+    const level = [pieces, ...createColorList(colors, pieces)]
+    level.length += emptyCount
+    return level
+}
+
+function setBottleWidth(eSize, eCount , rows) {
+    const vertSize = ((eSize + 1)*rows)
+    const horSize = Math.ceil((eCount - 1) / rows) + (MAX_ADDEMPTY || 1)
+    const eWidth = gameBoard.clientWidth / horSize
+    const eHeigth = gameBoard.clientHeight / vertSize
+    return eWidth < eHeigth ? eWidth : eHeigth
 }
 
 function newRow() {
@@ -50,17 +53,14 @@ function newRow() {
     return $row
 }
 
-function createBottle(pieces, color = [], number) {
+function createBottle(colors = [], maxSize) {
+    const currentBottles = document.querySelectorAll('.bottle').length || 0
     const $bottle = document.createElement('div')
     $bottle.classList.add('bottle')
-    $bottle.size = pieces
-    $bottle.id = number
-    $bottle.origincolors = []
-    for (let i = 0; i < pieces; i++) {
-        if(color.length>0){
-            $bottle.origincolors.push(color.pop())
-        }
-    }
+    $bottle.size = maxSize
+    $bottle.id = currentBottles+1
+    $bottle.origincolors = [...colors]
+    $bottle.colors = [...colors]
     return $bottle
 }
 
@@ -72,7 +72,6 @@ function initBottle($bottle){
         for (let color of $bottle.colors) {
             const piece = document.createElement('div')
             piece.classList.add('colorPiece')
-            piece.style.width = `${$bottle.width}px`
             piece.style.height = `${$bottle.width}px`
             piece.color = color
             piece.style.backgroundColor = color
@@ -81,18 +80,55 @@ function initBottle($bottle){
     }
 }
 
-function createColorList(elementsCount, pieces) {
-    //переделать, чтоб если что дублировал цвет, но в нужном кол-ве, генерировать список цветов соответствующий кол-ву элементов.
-    const randomColorList = []
-    const coloredPieces = elementsCount * pieces
-    for (let i = 0; i < coloredPieces; i++) {
-        let colorNum = i < elementsCount ? i : i%elementsCount
-        randomColorList.push(COLORS[colorNum])
+
+function createColorList(colorsCount, pieces) {
+    const randomList = []
+    for (let i = 0; i < colorsCount * pieces; i++) {
+        randomList.push(COLORS[i % colorsCount % COLORS.length])
         const j = Math.floor(Math.random() * (i+1))
-        const tmp = randomColorList[i]
-        randomColorList[i] = randomColorList[j]
-        randomColorList[j] = tmp
+        const tmp = randomList[i]
+        randomList[i] = randomList[j]
+        randomList[j] = tmp
     }
-    return randomColorList
+    const resultList = []
+    for (let j = 0 ; j < colorsCount; j++) {
+        resultList[j] = randomList.slice((j*pieces), pieces + (j*pieces))
+    }
+    return resultList
 }
+
+function addEmptyBottle() {
+    const currentBottles = document.querySelectorAll('.bottle')
+    if(currentBottles.length >= startList.length - 1 + MAX_ADDEMPTY) {
+        return
+    }
+    const ROWS = gameBoard.childNodes
+    const inRow = Math.floor(currentBottles.length/ROWS.length)
+    const curSize = currentBottles[0].size
+    const curWidth = currentBottles[0].width
+    for (const row of ROWS) {
+        if(row.childNodes.length <= inRow){
+            const newOne = createBottle([], curSize)
+            newOne.width = curWidth
+            initBottle(newOne)
+            row.appendChild(newOne)
+            break
+        }
+    }
+}
+
+
+// const colTest = ['red', 'green', 'blue', 'yellow']
+
+// function test(colorsCount) {
+//     const tmp = []
+//     const e = colTest.length
+
+//     for (let i = 0; i < colorsCount*2; i++) {
+//         tmp.push(colTest[i % colorsCount % e])
+//     }
+//     console.log(tmp);
+// }
+
+
 

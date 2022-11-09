@@ -2,17 +2,19 @@
 //Загрузить игру(открыть уровнь)
 //Счетчик шагов, Счетчик Времени
 //Результаты конкретного уровня
-// Возможность добавить пустую колбу !!!!
 // Информация о прохождение уровня, переход на следующий
 // подбор-генерация цветов
-// генерация нескольких одинаковых цветов
-// кнопки управления + мпню конструктор уровня
+// Изменять кнопки управления в зависимости от режима
+// меню конструктор уровня
 // меню выбора уровней(с лучими результатами)
 // Анимации
 // скины бутылочек
 
 let savedMoves = []
 function colorReplace(inputElement, outputElement) {
+    if(inputElement === outputElement) {
+        return
+    }
     const FREE = outputElement.size - outputElement.childNodes.length
     if(FREE === 0 || !colorMatch()) {
         return
@@ -85,6 +87,6 @@ function validateWin() {
             break;
         }
     }    
-    return wingame
+    return wingame && stopGame()
 }
 
