@@ -28,4 +28,8 @@
     .controls{
         left: 10px;
     }
+    .controls>button, .controls>.fixedBtn>button {
+        font-size: 1.5rem;
+        margin: 0 1px;
+    }
 }
