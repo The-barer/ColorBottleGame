@@ -1,13 +1,13 @@
 .controls{
     position: fixed;
-    top: 10px;
+    top: 20px;
     height: fit-content;
     
 }
 .controls>.fixedBtn {
     position: fixed;
     right: 10px;
-    top: 10px;
+    top: 20px;
     height: fit-content;
 }
 .controls>button, .controls>.fixedBtn>button {
@@ -16,7 +16,7 @@
     border: 0px solid;
     font-size: 2rem;
     color: #fff;
-    margin: 0 10px;
+    margin: 0px 5px;
     cursor: pointer;
 }
 
@@ -24,12 +24,12 @@
     color: aqua;
 }
 
-@media (max-width: 600px), screen and (orientation: portrait) {
+@media (max-width: 600px) {
     .controls{
         left: 10px;
     }
     .controls>button, .controls>.fixedBtn>button {
         font-size: 1.5rem;
-        margin: 0 1px;
+        margin: 0px 1px;
     }
 }
