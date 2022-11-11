@@ -13,10 +13,10 @@
 .controls>button, .controls>.fixedBtn>button {
     outline: none;
     background-color: transparent;
-    border: 0px solid;
+    border: 0;
     font-size: 2rem;
     color: #fff;
-    margin: 0px 5px;
+    margin: 5px;
     cursor: pointer;
 }
 
@@ -34,7 +34,7 @@
     }
     .controls>button, .controls>.fixedBtn>button {
         font-size: 1.5rem;
-        margin: 1px;
+        margin: 0;
         width: fit-content;
     }
 }
