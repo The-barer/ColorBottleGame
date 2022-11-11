@@ -1,0 +1,62 @@
+.settings {
+    z-index: 10;
+    position: absolute;
+    bottom: 15px;
+    width: 95vw;
+    height: 90vh;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+    transform: translateY(150vh);
+    transition: transform 500ms ease-in-out;
+}
+.settings.show {
+    transform: none;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0 20px;
+}
+
+.setter {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 40px;
+    user-select: none;
+}
+
+.setter>button {
+    position: absolute;
+    top: 0px;
+    outline: none;
+    background-color: transparent;
+    border: 0px solid;
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.setter>button:hover {
+    color: aqua;
+    font-size: 2rem;
+}
+
+.setter>button.left {
+    transform: translateX(-20px);
+}
+.setter>button.right {
+    transform: translateX(20px);
+}

@@ -1,0 +1,31 @@
+.controls{
+    position: fixed;
+    top: 10px;
+    height: fit-content;
+    
+}
+.controls>.fixedBtn {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    height: fit-content;
+}
+.controls>button, .controls>.fixedBtn>button {
+    outline: none;
+    background-color: transparent;
+    border: 0px solid;
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.controls>button:hover, .controls>.fixedBtn>button:hover {
+    color: aqua;
+}
+
+@media (max-width: 600px), screen and (orientation: portrait) {
+    .controls{
+        left: 10px;
+    }
+}

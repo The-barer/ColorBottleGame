@@ -1,0 +1,35 @@
+.startPage {
+    position: absolute;
+    bottom: 15px;
+    width: 95vw;
+    height: 90vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 500ms ease-out;
+    opacity: 0;
+    user-select: none;
+}
+
+.startPage.show {
+    z-index: 10;
+    opacity: 1
+}
+
+.startPage>button {
+    background-color: transparent;
+    border: 2px solid;
+    font-size: 1.8rem;
+    color: #fff;
+    margin: 40px 10px;
+    cursor: pointer;
+}
+
+.startPage>button:hover {
+    color: aqua;
+}

@@ -1,5 +1,6 @@
 gameBoard.addEventListener('click', bottleEvents)
 controls.addEventListener('click', controlsEvents)
+stopGame()
 
 let choosedState = false
 let $inputElement
@@ -46,22 +47,96 @@ function controlsEvents(event) {
             addEmptyBottle()
             break;
         case 'about':
-            aboutWindow = $.modal({...aboutModal})
-            aboutWindow.open()
+            $.info(aboutGameText)
             break
+        case 'settings':
+            displaySettingPage().then(()=>{
+                if(gameBoard.innerHTML){
+                    setCurrentPageElements('GameBoard')
+                } else {setCurrentPageElements('StartPage')}
+            }).catch(()=>{setCurrentPageElements('SettingsPage')} )
+            
+            break
+        case 'homepage':
+            if(gameBoard.innerHTML){
+                $.confirm(alertCloseGame).then(stopGame).catch(noop)
+            } else {setCurrentPageElements('StartPage')}
+            break;
+        case 'saveSettings':
+            saveSettings(settingsList)
+            break
+        case 'exitPage':
+            displaySettingPage().then(() => {
+                if(gameBoard.innerHTML){
+                    setCurrentPageElements('GameBoard')
+                } else {setCurrentPageElements('StartPage')}
+            })
+            break
+        case 'restoreSettings':
+            restorDefaultSettings(settingsList)
+            break;
     }
 }
 
-function startNewGame(col = 14, free = 2, piece = 5) {
-    startList = createLevelList(col, free, piece)
+function startNewGame() {
+    startList = createLevelList(bottlesCount.value(), emptyBottle.value(), difficulty.value())
     initGame(startList)
-    controls.innerHTML = ''
-    addStepBackButton()
-    addStartAgainButton()
-    addNewEmptyButton()
+    setCurrentPageElements('GameBoard')
 }
+
 function stopGame() {
+    setCurrentPageElements('StartPage')
+    setTimeout(()=> {gameBoard.innerHTML = ''}, 200) 
+}
+
+function setCurrentPageElements(page) {
     controls.innerHTML = ''
-    addNewGameButton()
-    addInfoButton()
+    switch (page) {
+        case 'GameBoard':
+            startPage.close()
+            fixedMain.open()
+            settingsPage.classList.remove('show')
+            gameBoard.classList.remove('hide')
+            addStartAgainButton();
+            addNewEmptyButton();
+            addStepBackButton();
+            break;
+        case 'SettingsPage':
+            fixedMain.open()
+            startPage.hide()
+            gameBoard.classList.add('hide')
+            addSaveButton();
+            addRestorButton();
+            addExitButton();
+            break;
+        case 'StartPage':
+            startPage.open()
+            fixedMain.open()
+            gameBoard.classList.add('hide')
+            settingsPage.classList.remove('show')
+            addNewGameButton();
+            addInfoButton();
+            break;
+        default:
+            break;
+    }
+}
+
+
+const alertCloseGame = {
+    title: 'Внимание',
+    closeable: true,
+    content: 'Текущая игра будет потеряна, вы точно хотите выйти?',
+    buttons: [{text: 'Выйти', type: 'secondary'}]
+}
+
+const aboutGameText = {
+    title: 'Информация о игре',
+    closeable: true,
+    content: `
+    <h4>Цель игры собрать во всех колбах одинаковый цвет</h4><br>
+    <ul> 
+    <li>Выберети колбу кликнув по ней</li>
+    <li>Укажите куда перелить цвет</li>
+    </ul>`
 }

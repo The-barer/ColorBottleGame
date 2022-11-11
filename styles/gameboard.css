@@ -1,0 +1,59 @@
+* {
+   margin: 0;
+   bottom: 0;
+   box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(159deg, rgba(18,18,18,1) 0%, rgba(126,126,126,1) 50%, rgba(52,52,52,1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.gameBoard{
+    position:absolute;
+    bottom: 15px;
+    width: 95vw;
+    height: 90vh;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity 300ms ease-in-out;
+}
+.gameBoard.hide {
+    opacity: 0;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 20px 0px;
+
+}
+.bottle {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgba(240, 255, 255, 0.05);
+}
+.bottle.chosed {
+    transform: translateY(-20px);
+}
+
+.colorPiece {
+    width: 100%;
+    transition: transform 200ms ease-in;
+}
+
