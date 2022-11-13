@@ -1,59 +1,80 @@
 const controls = document.querySelector('.controls')
-const fixedMain = new Object({
-    open() {
-        this.$elem = document.createElement('div')
-        this.$elem.classList.add('fixedBtn')
-        this.$elem.innerHTML = `
-        <button data-type="homepage"><i class="fa-solid fa-house"></i></button>
-        <button data-type="settings"><i class="fa-solid fa-gear"></i></button>`
-        controls.appendChild(this.$elem)
-    },
-    close() {
-        this.$elem.remove()
+const controlsMenu = document.createElement('div')
+controlsMenu.classList.add('controlsFixed')
+document.querySelector('.container').insertBefore(controlsMenu, controls)
+
+const gameBoardBtns = [
+    {
+        type: 'stepback',
+        inner: `<i class="fa-solid fa-arrow-left"></i>`,
+        tooltip: {text: 'Шаг назад'}
+    },{
+        type: 'addempty',
+        inner: `<i class="fa-solid fa-plus"></i>`,
+        tooltip: {text: 'Добавить пустую'}
+    },{
+        type: 'startAgainCurrent',
+        inner: `<i class="fa-solid fa-arrows-rotate"></i>`,
+        tooltip: {text: 'Начать заного'}
     }
-})
+]
+
+const startPageBtns = [
+    {
+        type: 'startNewGame',
+        inner: `<i class="fa-solid fa-dice"></i>`,
+        tooltip: {text: 'Cлучайная игра'}
+    },{
+        type: 'about',
+        inner: `<i class="fa-solid fa-circle-info"></i>`,
+        tooltip: {text: 'О игре'}
+    }
+]
+
+const settingsBtns = [
+    {
+        type: 'saveSettings',
+        inner: `<i class="fa-solid fa-floppy-disk"></i>`,
+        tooltip: {text: 'Сохранить'}
+    },{
+        type: 'exitPage',
+        inner: `<i class="fa-solid fa-right-from-bracket"></i>`,
+        tooltip: {text: 'Выйти'}
+    },{
+        type: 'restoreSettings',
+        inner: `<i class="fa-solid fa-rotate-left"></i>`,
+        tooltip: {text: 'Сбросить'}
+    }
+]
+
+const mainMenuBtns = [
+    {
+        type: 'homepage',
+        inner: `<i class="fa-solid fa-house"></i>`,
+        tooltip: {text: 'На главную'}
+    },
+    {
+        type: 'settings',
+        inner: `<i class="fa-solid fa-gear"></i>`,
+        tooltip: {text: 'Настройки'}
+    }
+]
+
+function addMenuButton(placementObj, btns = []) {
+    placementObj.removeEventListener('mouseover', createTooltip)
+    placementObj.innerHTML = ''
+    placementObj.addEventListener('mouseover', createTooltip)
+    btns.forEach((btn)=> {
+        const button = document.createElement('button')
+        button.setAttribute('data-type', btn.type)
+        button.innerHTML = btn.inner
+        if(btn.tooltip){
+            setTooltip(button, btn.tooltip, btn.type)
+        }
+        placementObj.appendChild(button)
+    })
+    
+}
 
 
-
-
-function addStepBackButton() {
-    const button = `<button data-type="stepback"><i class="fa-solid fa-arrow-left"></i></button>`
-    controls.innerHTML += button
-}
-function addNewEmptyButton() {
-    const button = `<button data-type="addempty"><i class="fa-solid fa-plus"></i></button>`
-    controls.innerHTML += button
-}
-function addStartAgainButton() {
-    const button = `<button data-type="startAgainCurrent"><i class="fa-solid fa-arrows-rotate"></i></button>`
-    controls.innerHTML += button
-}
-function addNewGameButton() {
-    const button = `<button data-type="startNewGame"><i class="fa-solid fa-dice"></i></button>`
-    controls.innerHTML += button
-}
-function addInfoButton() {
-    const button = `<button data-type="about"><i class="fa-solid fa-circle-info"></i></button>`
-    controls.innerHTML += button
-}
-function addSettingsButton() {
-    const button = `<button data-type="settings"><i class="fa-solid fa-gear"></i></button>`
-    controls.innerHTML += button
-}
-function addHomeButton() {
-    const button = `<button data-type="homepage"><i class="fa-solid fa-house"></i></button>`
-    controls.innerHTML += button
-}
-function addSaveButton() {
-    const button = `<button data-type="saveSettings"><i class="fa-solid fa-floppy-disk"></i></button>`
-    controls.innerHTML += button
-}
-function addExitButton() {
-    const button = `<button data-type="exitPage"><i class="fa-solid fa-right-from-bracket"></i></button>`
-    controls.innerHTML += button
-}
-function addRestorButton() {
-    const button = `<button data-type="restoreSettings"><i class="fa-solid fa-rotate-left"></i></button>`
-    controls.innerHTML += button
-}
 

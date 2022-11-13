@@ -1,6 +1,10 @@
 gameBoard.addEventListener('click', bottleEvents)
 controls.addEventListener('click', controlsEvents)
+controlsMenu.addEventListener('click', controlsEvents)
+
 stopGame()
+addMenuButton(controlsMenu, mainMenuBtns)
+
 
 let choosedState = false
 let $inputElement
@@ -28,8 +32,10 @@ function bottleEvents(event) {
 function controlsEvents(event) {
     let $Button = event.target
     if(!$Button.dataset.type) {
-        $Button = event.target.parentNode
-    } else if(!$Button.dataset.type){
+        if($Button.parentNode.dataset.type){
+            $Button = $Button.parentNode
+        }
+    } else {
         return
     }
 
@@ -90,32 +96,23 @@ function stopGame() {
 }
 
 function setCurrentPageElements(page) {
-    controls.innerHTML = ''
     switch (page) {
         case 'GameBoard':
             startPage.close()
-            fixedMain.open()
             settingsPage.classList.remove('show')
             gameBoard.classList.remove('hide')
-            addStartAgainButton();
-            addNewEmptyButton();
-            addStepBackButton();
+            addMenuButton(controls, gameBoardBtns)
             break;
         case 'SettingsPage':
-            fixedMain.open()
             startPage.hide()
             gameBoard.classList.add('hide')
-            addSaveButton();
-            addRestorButton();
-            addExitButton();
+            addMenuButton(controls, settingsBtns)
             break;
         case 'StartPage':
             startPage.open()
-            fixedMain.open()
             gameBoard.classList.add('hide')
             settingsPage.classList.remove('show')
-            addNewGameButton();
-            addInfoButton();
+            addMenuButton(controls, startPageBtns)
             break;
         default:
             break;
