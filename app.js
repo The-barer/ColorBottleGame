@@ -28,16 +28,18 @@ function colorReplace(inputElement, outputElement) {
     if(inputElement === outputElement) {
         return
     }
-    const FREE = outputElement.size - outputElement.childNodes.length
+    const FREE = outputElement.size - outputElement.querySelectorAll('.colorPiece').length
     if(FREE === 0 || !colorMatch()) {
         return
-    } else colorMove();
+    } else  colorMove();
 
     function colorMatch(){
+        let outElementPieces = outputElement.querySelectorAll('.colorPiece')
+        let inElementPiecse = inputElement.querySelectorAll('.colorPiece')
         try {
-            return outputElement.lastChild.color === inputElement.lastChild.color
+            return outElementPieces[outElementPieces.length-1].color === inElementPiecse[inElementPiecse.length-1].color
         } catch (error) {
-            return outputElement.childNodes.length === 0
+            return outElementPieces.length === 0
         }
     }
     function colorMove() {
@@ -71,14 +73,14 @@ function restoreState() {
 }
 
 function validateBottle(element) {
-    switch (element.childNodes.length) {
+    switch (element.childElementCount-1) {
         case 0:
             element.win = true
             break;
         case element.size:
             element.win = true
-            for(let el of element.childNodes){
-                if(element.childNodes[element.size-1].color !== el.color) {
+            for(let el of element.querySelectorAll('.colorPiece')){
+                if(element.querySelectorAll('.colorPiece')[element.size-1].color !== el.color) {
                     element.win = false
                     break;
                 }

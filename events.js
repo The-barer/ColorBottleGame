@@ -11,7 +11,7 @@ let $inputElement
 
 function bottleEvents(event) {
     let $newBottle = event.target
-    if ($newBottle.classList.contains('colorPiece')) {
+    if ($newBottle.classList.contains('colorPiece') || $newBottle.classList.contains('bottleform')) {
         $newBottle = $newBottle.parentNode
     } else if(!$newBottle.classList.contains('bottle')){
         return

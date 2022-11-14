@@ -2,10 +2,9 @@ const tips = {}
 
 function setTooltip(obj, params, idForTip) {
     if (!tips[idForTip]) {
-        obj.setAttribute('data-tip', idForTip)
         tips[idForTip] = params 
     }
-
+    obj.setAttribute('data-tip', idForTip)
 }
 
 function createTooltip(e) {

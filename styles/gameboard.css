@@ -20,14 +20,14 @@ body {
 }
 .gameBoard{
     position:absolute;
-    bottom: 15px;
+    top: 12vh;
+    bottom: 8vh;
     width: 95vw;
-    height: 90vh;
+    height: 80vh;
     background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
     transition: opacity 300ms ease-in-out;
 }
 .gameBoard.hide {
@@ -42,20 +42,34 @@ body {
 }
 .bottle {
     overflow: hidden;
+    z-index: 2;
     position: relative;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    border: 1px solid black;
-    border-radius: 5px;
     cursor: pointer;
     background-color: rgba(240, 255, 255, 0.05);
+    border-radius: 5px;
+    clip-path: polygon(0% 100%, 0 15%, 10% 10%, 5% 0, 95% 0, 90% 10%, 100% 15%, 100% 100%);
 }
+.bottleform {
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    clip-path: polygon(0% 100%, 0 15%, 10% 10%, 5% 0, 95% 0, 90% 10%, 100% 15%, 100% 100%);
+    box-shadow: inset 0px -4px 7px 1px #dadada75;
+    border-radius: 5px;
+}
+
 .bottle.chosed {
     transform: translateY(-20px);
 }
 
 .colorPiece {
+    z-index: 1;
+    position: relative;
     width: 100%;
     transition: transform 200ms ease-in;
 }

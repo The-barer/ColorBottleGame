@@ -66,8 +66,11 @@ function createBottle(colors = [], maxSize) {
 
 function initBottle($bottle){
     $bottle.innerHTML = ''
-    $bottle.style.height = `${$bottle.size*$bottle.width}px`;
+    $bottle.style.height = `${$bottle.size*$bottle.width*1.2}px`;
     $bottle.style.width = `${$bottle.width}px`;
+    const $bottleForm = document.createElement('div')
+    $bottleForm.classList = 'bottleform'
+    $bottle.appendChild($bottleForm)
     if($bottle.colors.length > 0) {
         for (let color of $bottle.colors) {
             const piece = document.createElement('div')
@@ -78,6 +81,7 @@ function initBottle($bottle){
             $bottle.append(piece)
         }
     }
+
 }
 
 

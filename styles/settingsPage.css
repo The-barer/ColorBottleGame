@@ -1,9 +1,10 @@
 .settings {
     z-index: 2;
     position: absolute;
-    bottom: 15px;
+    top: 12vh;
+    bottom: 8vh;
     width: 95vw;
-    height: 90vh;
+    height: 80vh;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.05);
     display: flex;

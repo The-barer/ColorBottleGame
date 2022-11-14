@@ -37,13 +37,13 @@ const settingsBtns = [
         inner: `<i class="fa-solid fa-floppy-disk"></i>`,
         tooltip: {text: 'Сохранить'}
     },{
-        type: 'exitPage',
-        inner: `<i class="fa-solid fa-right-from-bracket"></i>`,
-        tooltip: {text: 'Выйти'}
-    },{
         type: 'restoreSettings',
         inner: `<i class="fa-solid fa-rotate-left"></i>`,
         tooltip: {text: 'Сбросить'}
+    },{
+        type: 'exitPage',
+        inner: `<i class="fa-solid fa-right-from-bracket"></i>`,
+        tooltip: {text: 'Выйти'}
     }
 ]
 
