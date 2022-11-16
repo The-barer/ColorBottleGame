@@ -60,21 +60,30 @@ const mainMenuBtns = [
     }
 ]
 
-function addMenuButton(placementObj, btns = []) {
-    placementObj.removeEventListener('mouseover', createTooltip)
-    placementObj.innerHTML = ''
-    placementObj.addEventListener('mouseover', createTooltip)
-    btns.forEach((btn)=> {
-        const button = document.createElement('button')
-        button.setAttribute('data-type', btn.type)
-        button.innerHTML = btn.inner
-        if(btn.tooltip){
-            setTooltip(button, btn.tooltip, btn.type)
-        }
-        placementObj.appendChild(button)
-    })
+
+function addMenuButtons(placementObj, btns = []) {
+    try {
+        placementObj.removeEventListener('mouseover', createTooltip)
+        placementObj.innerHTML = ''
+        placementObj.addEventListener('mouseover', createTooltip)
+    } catch {
+        placementObj.innerHTML = ''
+    }
     
+    btns.forEach((btn)=> {
+        placementObj.appendChild(_createButton(btn))
+    })
 }
 
 
 
+function _createButton(btn = {}) {
+    const button = document.createElement('button')
+    button.setAttribute('data-type', btn.type)
+    button.innerHTML = btn.inner
+    try {
+        setTooltip(button, btn.tooltip, btn.type)
+    } catch {
+    }
+    return button
+}

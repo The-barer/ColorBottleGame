@@ -41,3 +41,9 @@
         left: 10px;
     }
 }
+
+.timer {
+    position: absolute;
+    left: 150%;
+    font-size: 1.5rem;
+}

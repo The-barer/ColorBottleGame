@@ -1,9 +1,10 @@
 gameBoard.addEventListener('click', bottleEvents)
 controls.addEventListener('click', controlsEvents)
 controlsMenu.addEventListener('click', controlsEvents)
+addMenuButtons(controlsMenu, mainMenuBtns)
 
 stopGame()
-addMenuButton(controlsMenu, mainMenuBtns)
+
 
 
 let choosedState = false
@@ -101,18 +102,19 @@ function setCurrentPageElements(page) {
             startPage.close()
             settingsPage.classList.remove('show')
             gameBoard.classList.remove('hide')
-            addMenuButton(controls, gameBoardBtns)
+            addMenuButtons(controls, gameBoardBtns)
+            controls.appendChild(timeButton)
             break;
         case 'SettingsPage':
             startPage.hide()
             gameBoard.classList.add('hide')
-            addMenuButton(controls, settingsBtns)
+            addMenuButtons(controls, settingsBtns)
             break;
         case 'StartPage':
             startPage.open()
             gameBoard.classList.add('hide')
             settingsPage.classList.remove('show')
-            addMenuButton(controls, startPageBtns)
+            addMenuButtons(controls, startPageBtns)
             break;
         default:
             break;
